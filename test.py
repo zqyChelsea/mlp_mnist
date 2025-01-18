@@ -39,20 +39,36 @@ class LogisticRegression(nn.Module):
         return self.linear(x)
 
 # Instantiate the model and load weights
-logistic_model = LogisticRegression(input_size=28*28, num_classes=10)
-logistic_model.load_state_dict(torch.load('logistic_model.pth')) # Load trained weights
-logistic_model.eval()  # Set model to evaluation mode
+logistic_model1 = LogisticRegression(input_size=28*28, num_classes=10)
+logistic_model1.load_state_dict(torch.load('logistic_model1.pth')) # Load trained weights
+logistic_model1.eval()  # Set model to evaluation mode
 
 correct = 0
 total = 0
 with torch.no_grad(): # Disable gradient calculation for inference
     for images, labels in test_loader:
-        outputs = logistic_model(images)
+        outputs = logistic_model1(images)
         _, predicted = torch.max(outputs.data, 1) # Get predicted class
         total += labels.size(0)
         correct += (predicted == labels).sum().item() # Count correct predictions
 
-print(f'Accuracy of the Logistic Regression model on the test images: {100 * correct / total:.2f}%')
+print(f'Accuracy of Logistic Regression model 1 on the test images: {100 * correct / total:.2f}%')
+
+# =================================================================
+logistic_model2 = LogisticRegression(input_size=28*28, num_classes=10)
+logistic_model2.load_state_dict(torch.load('logistic_model2.pth')) # Load trained weights
+logistic_model2.eval()  # Set model to evaluation mode
+
+correct = 0
+total = 0
+with torch.no_grad(): # Disable gradient calculation for inference
+    for images, labels in test_loader:
+        outputs = logistic_model2(images)
+        _, predicted = torch.max(outputs.data, 1) # Get predicted class
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item() # Count correct predictions
+
+print(f'Accuracy of Logistic Regression model 2 on the test images: {100 * correct / total:.2f}%')
 
 # =================================================================
 # MLP model 1
